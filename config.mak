@@ -9,7 +9,7 @@ BR_ARCHES +=
 ########################
 ### Package versions ###
 ########################
-CPSW_VERSION     = R3.5.4
+CPSW_VERSION     = R3.6.4
 BOOST_VERSION    = 1.63.0
 YAML_CPP_VERSION = yaml-cpp-0.5.3
 
