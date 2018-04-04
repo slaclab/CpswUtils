@@ -11,41 +11,23 @@
 #include <getopt.h>
 #include <stdexcept>
 
-void dumpRegisterMap(const Path& p)
+class DumpRegMap : public IPathVisitor
 {
+     public:
+        DumpRegMap(ConstPath p) : root(p) { root->explore(this); };
 
-    Path p_aux = p->clone();
-    Child c_aux = p_aux->tail();
-    Hub h_aux;
+        virtual bool visitPre(ConstPath here) {};
 
-    // Check if the child is null which mean where are the origin
-    if (c_aux)
-        h_aux = c_aux->isHub();
-    else
-        h_aux = p_aux->origin();
-
-
-    Children    c = h_aux->getChildren();
-    int         n = c->size();
-
-    // Recursively look for hubs.
-    for (int i = 0 ; i < n ; i++)
-    {
-        Hub h2 = (*c)[i]->isHub();
-        if (h2)
+        virtual void visitPost(ConstPath here)
         {
-            Path p2 = p_aux->findByName((*c)[i]->getName());
-            dumpRegisterMap(p2);
-        }
-        else
-        {
-            // When a leave is found, write it path and name to the output file
-            std::cout << p_aux->toString() << '/' << (*c)[i]->getName() << std::endl;
-        }
-    }
+            if (!here->tail()->isHub())
+                printf("%s\n", here->toString().c_str());
+        };
 
-    return;
-}
+    private:
+        ConstPath root;
+
+};
 
 void usage(char *name)
 {
@@ -60,7 +42,7 @@ void usage(char *name)
 
 int main(int argc, char **argv)
 {
-    std::string yamlDoc; 
+    std::string yamlDoc;
     std::string yamlDir;
     std::string rootName = "mmio";
     int c;
@@ -97,14 +79,13 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-
     Path root;
     if (yamlDir.empty())
-        root = IPath::loadYamlFile( yamlDoc.c_str(), rootName.c_str(), NULL );  
+        root = IPath::loadYamlFile( yamlDoc.c_str(), rootName.c_str(), NULL );
     else
-        root = IPath::loadYamlFile( yamlDoc.c_str(), rootName.c_str(), yamlDir.c_str() );  
+        root = IPath::loadYamlFile( yamlDoc.c_str(), rootName.c_str(), yamlDir.c_str() );
 
-    dumpRegisterMap(root);
+    DumpRegMap dump(root);
 
     return 0;
 }
