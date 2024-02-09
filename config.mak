@@ -4,14 +4,18 @@
 # Host version
 HARCH      = rhel6
 # Buildroot versions
-BR_ARCHES += buildroot-2016.11.1
+#BR_ARCHES += buildroot-2016.11.1
+BR_ARCHES += buildroot-2019.08
 
 ########################
 ### Package versions ###
 ########################
-CPSW_VERSION     = R3.6.6
-BOOST_VERSION    = 1.63.0
-YAML_CPP_VERSION = yaml-cpp-0.5.3
+#CPSW_VERSION     = R3.6.6
+#BOOST_VERSION    = 1.63.0
+#YAML_CPP_VERSION = yaml-cpp-0.5.3
+CPSW_VERSION     = R4.5.0
+BOOST_VERSION    = 1.64.0
+YAML_CPP_VERSION = yaml-cpp-0.5.3_boost-1.64.0
 
 ########################
 ### Path definitions ###
@@ -20,6 +24,7 @@ YAML_CPP_VERSION = yaml-cpp-0.5.3
 BUILDROOT_HOME=/afs/slac/package/linuxRT/$(BR_VERSION)
 # Location CrossCompiler HOME:
 XCROSS_HOME=$(BUILDROOT_HOME)/host/linux-x86_64/x86_64/usr/bin/x86_64-buildroot-linux-gnu-
+XCROSS_HOME=$(BUILDROOT_HOME)/host/linux-x86_64/x86_64/usr/bin/x86_64-linux-
 
 # Package top
 PACKAGE_TOP      = /afs/slac/g/lcls/package

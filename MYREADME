@@ -1,0 +1,5 @@
+Steps:
+1. bash
+2. ./env.slac.sh
+3. make
+4. ./cmd_run.sh
