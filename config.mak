@@ -2,7 +2,8 @@
 ### Arch Versions ###
 #####################
 # Host version
-HARCH      = rhel6
+#HARCH      = rhel6
+HARCH      = rhel7
 # Buildroot versions
 #BR_ARCHES += buildroot-2016.11.1
 BR_ARCHES += buildroot-2019.08

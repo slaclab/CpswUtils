@@ -144,12 +144,11 @@ class IYamlSetIP : public IYamlFixup {
         std::string ip_addr_;
 };
 
-
 // Usage print message
 void usage(char *name)
 {
     std::cout << "Dump the register values of a given YAML definition file to the standard output stream." << std::endl;
-    std::cout << "Usage: " << name << " -Y yaml_file [-R root_name] [-D yaml_dir] [-h]" << std::endl;
+    std::cout << "Usage: " << name << " -Y yaml_file -A ipAddress [-R root_name] [-D yaml_dir] [-h]" << std::endl;
     std::cout << "    -Y yaml_file : Path to the top level YAML file" << std::endl;
     std::cout << "    -R root_name : Dump the map for root with name \"root_name\". Default is \"mmio\"" << std::endl;
     std::cout << "    -D yaml_dir  : Directory where all the yaml files reside. Default is same directory as \"yaml_file\"" << std::endl;
@@ -197,7 +196,7 @@ int main(int argc, char **argv)
         }
     }
 
-    if (yamlTop.empty() || yamlDir.empty())
+    if (yamlTop.empty())
     {
         std::cout << "Must specify Yaml top file and directory paths." << std::endl;
         usage(argv[0]);
