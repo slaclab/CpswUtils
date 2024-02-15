@@ -71,7 +71,6 @@ usage()
     echo "    -a|--addr         <FPGA_IP>           : FPGA IP address. If defined, -S and -N are ignored."
     echo "    -c|--cpu          <cpu_name>          : The remote CPU node name."
     echo "    -y|--yaml         <YAML_file>         : Path to the top level YAML file.If defined, -t will be ignored."
-    echo "    -d|--yaml_dir     <YAML_dir>          : Path to the top level YAML dir.If defined, -t will be ignored."
     echo "    -t|--tar          <tarball_file>      : Path to the YAML tarball file. Must be defined is -y is not defined."
     echo "    -s|--enable-streams                   : Enable all streams"
     echo "    -h|--help                             : Show this message."
@@ -156,10 +155,6 @@ case ${key} in
     ;;
     -y|--yaml)
     yaml="$2"
-    shift
-    ;;
-    -d|--yaml_dir)
-    yaml_dir="$2"
     shift
     ;;
     -t|--tar)
@@ -361,7 +356,7 @@ fi
 # Start the binary 
 echo "Starting DumpRegisterValues..."
 echo
-${top_dir}/src/O.rhel6-x86_64/DumpRegisterValues -Y ${yaml} -A ${fpga_ip} -D ${yaml_dir} 
+${top_dir}/src/O.rhel7-x86_64/DumpRegisterValues -Y ${yaml} -A ${fpga_ip}
 
 # Clean up system and exit
 clean_up 0

@@ -133,15 +133,29 @@ class DumpRegVals : public IPathVisitor
 // Set IP Class
 class IYamlSetIP : public IYamlFixup {
     public:
-        IYamlSetIP( const char* ip_addr ) : ip_addr_(ip_addr) {}
+        IYamlSetIP( const char* ipAddr ) : ipAddr_(ipAddr) {}
         virtual void operator()(YAML::Node &node, YAML::Node &dummy)
         {
-            node["ipAddr"] = ip_addr_;
+            node["ipAddr"] = ipAddr_;
         }
 
         virtual ~IYamlSetIP() {}
     private:
-        std::string ip_addr_;
+        std::string ipAddr_;
+};
+
+class IYamlSetFileName : public IYamlFixup {                                                                                                    
+    public:
+        IYamlSetFileName( const char * fileName) : fileName_(fileName) {}
+        virtual void operator() (YAML::Node &node, YAML::Node &dummy)
+        {
+            node["fileName"] = fileName_;
+        }
+ 
+        virtual ~IYamlSetFileName() {}
+
+    private:
+        std::string fileName_;
 };
 
 // Usage print message
@@ -205,7 +219,8 @@ int main(int argc, char **argv)
    
     // Load the yaml hierarchy from the YAML files
     Path root;
-  
+    std::string devFilePath;
+
     try 
     {
         std::cout << "Loading YAML hierarchy" << std::endl;
@@ -222,6 +237,11 @@ int main(int argc, char **argv)
             }
             else if (rootType == "MemDev")
             {
+                std::cout << "Setting the filename" << std::endl;
+                devFilePath = ipAddress;
+                IYamlSetFileName setFileName(devFilePath.c_str());
+                root = IPath::loadYamlFile(yamlTop.c_str(), rootType.c_str(), yamlDir.c_str(), &setFileName);
+                std::cout << "Done loading the YAML file" << std::endl;
             }
             else
             {
